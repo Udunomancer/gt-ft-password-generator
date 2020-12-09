@@ -31,25 +31,38 @@ function rqstPassLen() {
 }
 
 function rqstNewPassLen(charactersValid, lengthValid) {
+  
+}
 
+function returnPassLen(validRqst) {
+  console.log(validRqst);
+  return validRqst;
 }
 
 function verPassLen(passLength) {
 
-  //var validChar = cleanLenRqstChar(passLength);
-  var validChar = true;
+  var validChar = cleanLenRqstChar(passLength);
+  
   //var validLength = cleanLenRqstLen(passLength);
   var validLength = true;
 
   if (validChar && validLength) {
-    return passLength
+    return passLength;
   } else {
-    rqstNewPassLen(validChar, validLength);
+    console.log('incorrect');
+    return passLength;
   }
 }
 
-function cleanLenRqstChar() {
+function cleanLenRqstChar(requestedPassword) {
+  var reqstIsNumbers = true;
+  for (i = 0; i < requestedPassword.length; i++) {
+    if (intDict.indexOf(requestedPassword[i]) === -1) {
+      reqstIsNumbers = false;
+    }
+  }
 
+  return reqstIsNumbers;
 }
 
 function cleanLenRqstLen() {

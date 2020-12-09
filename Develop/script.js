@@ -22,8 +22,11 @@ function generatePassword() {
 }
 
 function cleanLenRqst() {
+  var enteredValue; 
   
-  var enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
+  if (!enteredValue) {
+    enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
+  }
   
   return enteredValue;
 }

@@ -30,17 +30,22 @@ function rqstPassLen() {
   return enteredValue;
 }
 
-function rqstNewPassLen(errorType) {
+function rqstNewPassLen(charactersValid, lengthValid) {
 
 }
 
 function verPassLen(passLength) {
 
-  var validChar = cleanLenRqstChar(passLength);
+  //var validChar = cleanLenRqstChar(passLength);
+  var validChar = true;
+  //var validLength = cleanLenRqstLen(passLength);
+  var validLength = true;
 
-  var validLength = cleanLenRqstLen(passLength);
-
-  return passLength
+  if (validChar && validLength) {
+    return passLength
+  } else {
+    rqstNewPassLen(validChar, validLength);
+  }
 }
 
 function cleanLenRqstChar() {

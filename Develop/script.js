@@ -17,9 +17,12 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 function generatePassword() {
 
   //var userInputLen = rqstPassLen();
-  var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
+  //var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
+  //var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
+  //var userInputNumber = rqstChrType('numbers (0-9)');
+  var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
 
-  return userInputLwrCase;
+  return userInputSpclChar;
 }
 
 function rqstPassLen() {

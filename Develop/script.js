@@ -17,7 +17,17 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 function generatePassword() {
 
   var userInputLen = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)');
+
+  userInputLen = cleanLenRqst(userInputLen);
+
   return userInputLen;
+}
+
+function cleanLenRqst(enteredValue) {
+  
+  console.log(enteredValue);
+  return enteredValue;
+  
 }
 
 // Click button to start

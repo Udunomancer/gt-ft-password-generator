@@ -16,19 +16,31 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 
 function generatePassword() {
 
-  var userInputLen = cleanLenRqst();
+  var userInputLen = rqstPassLen();
 
   return userInputLen;
 }
 
-function cleanLenRqst() {
-  var enteredValue; 
+function rqstPassLen() {
   
-  if (!enteredValue) {
-    enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
-  }
-  
+  var enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
+
+  enteredValue = verPassLen(enteredValue);
+
   return enteredValue;
+}
+
+function rqstNewPassLen(errorType) {
+
+}
+
+function verPassLen(passLength) {
+
+  var validChar = cleanLenRqstChar(passLength);
+
+  var validLength = cleanLenRqstLen(passLength);
+
+  return passLength
 }
 
 function cleanLenRqstChar() {
@@ -38,6 +50,8 @@ function cleanLenRqstChar() {
 function cleanLenRqstLen() {
   
 }
+
+
 
 // Click button to start
 

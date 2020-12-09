@@ -30,43 +30,69 @@ function rqstPassLen() {
   return enteredValue;
 }
 
-function rqstNewPassLen(charactersValid, lengthValid) {
+function rqstNewPassLen(error) {
+
+  var errorMsg = {
+    invalidCharacters: 'contains non-numeric characters.  Please only use 0-9.',
+    invalidSizeSmall: 'is too small.  Please enter a number between 8 and 128.',
+    invalidSizeLarge: 'is too large.  Please enter a number between 8 and 128.'
+  };
+
+  var enteredValue = prompt('Sorry!  Looks like your requested length ' + errorMsg[error]);
+
+  enteredValue = verPassLen(enteredValue);
+
+  return enteredValue;
   
 }
 
-function returnPassLen(validRqst) {
-  console.log(validRqst);
-  return validRqst;
-}
 
 function verPassLen(passLength) {
 
-  var validChar = cleanLenRqstChar(passLength);
-  
-  //var validLength = cleanLenRqstLen(passLength);
-  var validLength = true;
+  var valid;
 
-  if (validChar && validLength) {
-    return passLength;
-  } else {
-    console.log('incorrect');
-    return passLength;
+  valid = verPassLenChar(passLength);
+
+  if (valid === 'valid') {
+
+    valid = verPassLenVal(passLength);
+
   }
+  
+  if (valid !== 'valid') {
+
+    passLength = rqstNewPassLen(valid);
+  
+  }
+
+  return passLength;
+
 }
 
-function cleanLenRqstChar(requestedPassword) {
-  var reqstIsNumbers = true;
+function verPassLenChar(requestedPassword) {
+  var reqstIsNumbers = 'valid';
   for (i = 0; i < requestedPassword.length; i++) {
     if (intDict.indexOf(requestedPassword[i]) === -1) {
-      reqstIsNumbers = false;
+      reqstIsNumbers = 'invalidCharacters';
     }
   }
 
   return reqstIsNumbers;
 }
 
-function cleanLenRqstLen() {
-  
+function verPassLenVal(requestedPassword) {
+  var rqstIsInRange;
+
+  if(parseInt(requestedPassword) < 8) {
+    rqstIsInRange = 'invalidSizeSmall';
+  } else if (parseInt(requestedPassword) > 128) {
+    rqstIsInRange = 'invalidSizeLarge';
+  } else {
+    rqstIsInRange = 'valid';
+  }
+
+  return rqstIsInRange;
+
 }
 
 

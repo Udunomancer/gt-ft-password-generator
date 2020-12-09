@@ -16,13 +16,15 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 
 function generatePassword() {
 
-  //var userInputLen = rqstPassLen();
-  //var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
-  //var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
-  //var userInputNumber = rqstChrType('numbers (0-9)');
+  var userInputLen = rqstPassLen();
+  var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
+  var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
+  var userInputNumber = rqstChrType('numbers (0-9)');
   var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
+  var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
+  
 
-  return userInputSpclChar;
+  return characterAmounts;
 }
 
 function rqstPassLen() {
@@ -104,6 +106,36 @@ function rqstChrType(typeMsg) {
   var includeType = confirm('Click "OK" to include ' + typeMsg + ' in your generated password.  Click "Cancel" to exclude them.');
 
   return includeType;
+}
+
+function randCharAmounts(passwordLength, usedTypesArray) {
+  //console.log(passwordLength);
+  //console.log(usedTypesArray);
+  var numOfCharTypes = [];
+  var denominator = 0;
+  var totalReserved = 0;
+  for (var i = 0; i < usedTypesArray.length; i++) {
+    if (usedTypesArray[i]) {
+      numOfCharTypes[i] = Math.random();
+      totalReserved = totalReserved + 1;
+    } else {
+      numOfCharTypes[i] = 0;
+    }
+    denominator = denominator + numOfCharTypes[i];
+    
+  }
+  //console.log(numOfCharTypes);
+  //console.log(denominator);
+  //console.log(totalReserved);
+
+  for (var j = 0; j < numOfCharTypes.length; j++) {
+    if (numOfCharTypes[j] > 0) {
+      numOfCharTypes[j] = Math.round((numOfCharTypes[j]/denominator)*(passwordLength-totalReserved)) + 1;
+    }
+  }
+
+  //console.log(numOfCharTypes);
+  return numOfCharTypes;
 }
 
 

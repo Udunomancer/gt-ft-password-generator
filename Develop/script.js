@@ -16,9 +16,10 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 
 function generatePassword() {
 
-  var userInputLen = rqstPassLen();
+  //var userInputLen = rqstPassLen();
+  var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
 
-  return userInputLen;
+  return userInputLwrCase;
 }
 
 function rqstPassLen() {
@@ -43,7 +44,7 @@ function rqstNewPassLen(error) {
   enteredValue = verPassLen(enteredValue);
 
   return enteredValue;
-  
+
 }
 
 
@@ -93,6 +94,13 @@ function verPassLenVal(requestedPassword) {
 
   return rqstIsInRange;
 
+}
+
+function rqstChrType(typeMsg) {
+
+  var includeType = confirm('Click "OK" to include ' + typeMsg + ' in your generated password.  Click "Cancel" to exclude them.');
+
+  return includeType;
 }
 
 

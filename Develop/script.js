@@ -15,6 +15,9 @@ var alphaDict = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+'];
 
 function generatePassword() {
+  //Function to generate a random password
+  //Input: None
+  //Output: a generated password OR 'Request Cancelled' if user cancels the password length prompt
 
   var userInputLen = rqstPassLen();
   if (userInputLen === false) {
@@ -24,14 +27,8 @@ function generatePassword() {
     var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
     var userInputNumber = rqstChrType('numbers (0-9)');
     var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
-    console.log(userInputLwrCase);
-    console.log(userInputUprCase);
-    console.log(userInputNumber);
-    console.log(userInputSpclChar);
     var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
-    console.log(characterAmounts);
     var generatedCharMap = characterMap(userInputLen, characterAmounts);
-    console.log(generatedCharMap);
     var generatedPassword = assignRandChar(generatedCharMap);
     
     return generatedPassword;
@@ -40,6 +37,9 @@ function generatePassword() {
 }
 
 function rqstPassLen() {
+  //Function to request a valid password length from the user
+  //Input: None
+  //Output: A password length ('string') OR false (boolean) if user cancels on prompt
   
   var enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
 
@@ -53,6 +53,9 @@ function rqstPassLen() {
 }
 
 function rqstNewPassLen(error) {
+  //Function to re-request a valid password length from the user
+  //Input: password length rejection reason ('string')
+  //Output: A password length ('string') OR false (boolean) if user cancels on prompt
 
   var errorMsg = {
     invalidCharacters: 'contains non-numeric characters.  Please only use 0-9.',
@@ -73,6 +76,9 @@ function rqstNewPassLen(error) {
 }
 
 function verPassLen(passLength) {
+  //Function to verify that user requested password length is valid for purpose of password generator
+  //Input: user input ('string')
+  //Output: ('string') valid if password length is valid OR rejection reason if password length is invalid
 
   var valid;
 
@@ -95,6 +101,11 @@ function verPassLen(passLength) {
 }
 
 function verPassLenChar(requestedPassword) {
+  //Function to verify that all characters in the requested password length are numbers
+  //DID NOT USE ParseInt because ParseInt will return an int in situations where numbers AND letters are entered (ex: parseInt(123abc would return 123))
+  //Input: User requested password length (string)
+  //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers
+
   var reqstIsNumbers = 'valid';
     for (i = 0; i < requestedPassword.length; i++) {
       if (intDict.indexOf(requestedPassword[i]) === -1) {
@@ -105,6 +116,10 @@ function verPassLenChar(requestedPassword) {
 }
 
 function verPassLenVal(requestedPassword) {
+  //Function to verify that requested password length is within accepted range (8<= x <= 128)
+  //Input: User requested password length (string)
+  //Output: ('string') 'valid' if password length only contains numbers, 'invalidSizeSmall' if password length too short, 'invalidSizeLarge' if password length too long
+
   var rqstIsInRange;
 
   if(parseInt(requestedPassword) < 8) {
@@ -120,6 +135,9 @@ function verPassLenVal(requestedPassword) {
 }
 
 function rqstChrType(typeMsg) {
+  //Function to prompt the user if they would like to include a specific character type
+  //Input: ('string') message to specify which character type
+  //Output: (boolean) true to include character type, false to exclude
 
   var includeType = confirm('Click "OK" to include ' + typeMsg + ' in your generated password.  Click "Cancel" to exclude them.');
 
@@ -127,8 +145,10 @@ function rqstChrType(typeMsg) {
 }
 
 function randCharAmounts(passwordLength, usedTypesArray) {
-  //console.log(passwordLength);
-  //console.log(usedTypesArray);
+  //Function to randomly assign total # of instances of selected character types in final password
+  //Input: requested password length () AND selected character types (array of booleans)
+  //Output: total # of instances of each character type (array of numbers)
+
   var numOfCharTypes = [];
   var denominator = 0;
   var totalReserved = 0;
@@ -142,9 +162,7 @@ function randCharAmounts(passwordLength, usedTypesArray) {
     denominator = denominator + numOfCharTypes[i];
     
   }
-  //console.log(numOfCharTypes);
-  //console.log(denominator);
-  //console.log(totalReserved);
+
 
   for (var j = 0; j < numOfCharTypes.length; j++) {
     if (numOfCharTypes[j] > 0) {
@@ -152,11 +170,15 @@ function randCharAmounts(passwordLength, usedTypesArray) {
     }
   }
 
-  //console.log(numOfCharTypes);
+ 
   return numOfCharTypes;
 }
 
 function characterMap(passwordLength, characterAmounts) {
+  //Function to map out what character types will occur where in the final password
+  //Input: Password length () AND character amounts (array of numbers)
+  //Output: (string) character types mapped out in their final positions
+
   var remainingCharacters = passwordLength;
   var individualCharacters = characterAmounts;
   var characterMap = '';
@@ -181,6 +203,9 @@ function characterMap(passwordLength, characterAmounts) {
 }
 
 function assignRandChar(characterMap) {
+  //Function to randomly assign a character type in each position of the final password
+  //Input: character map of the password (string)
+  //Output: Final password (string)
   
   var finalPassword = '';
   for (var i = 0; i < characterMap.length; i++) {

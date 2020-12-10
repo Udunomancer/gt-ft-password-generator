@@ -22,7 +22,7 @@ This Password Generator contains one page, where a user can generate a random pa
 
 ## <a name="installation"></a>Installation
 
-If you'd like to use this page as a template, feel free to fork the repository at 
+If you'd like to use this page as a template, feel free to fork the repository at [https://github.com/Udunomancer/gt-ft-password-generator](https://github.com/Udunomancer/gt-ft-password-generator)
 
 ## <a name="usage"></a> Usage
 

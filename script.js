@@ -78,8 +78,8 @@ function generatePassword() {
     ) {
       return "Request Cancelled - No Character Types Selected";
     } else {
-      var characterAmounts = randCharAmounts(userInputLen, userInputCharTypes);
-      var generatedCharMap = characterMap(userInputLen, characterAmounts);
+      var generatedCharAmounts = randCharAmounts(userInputLen, userInputCharTypes);
+      var generatedCharMap = characterMap(userInputLen, generatedCharAmounts);
       var generatedPassword = assignRandChar(generatedCharMap);
 
       return generatedPassword;
@@ -149,31 +149,31 @@ function verPassLen(passLength) {
   return passLength;
 }
 
-function verPassLenChar(requestedPassword) {
+function verPassLenChar(passLength) {
   //Function to verify that all characters in the requested password length are numbers
   //DID NOT USE ParseInt because ParseInt will return an int in situations where numbers AND letters are entered (ex: parseInt(123abc would return 123))
   //Input: User requested password length (string)
   //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers
 
   var reqstIsNumbers = "valid";
-  for (i = 0; i < requestedPassword.length; i++) {
-    if (intDict.indexOf(requestedPassword[i]) === -1) {
+  for (i = 0; i < passLength.length; i++) {
+    if (intDict.indexOf(passLength[i]) === -1) {
       reqstIsNumbers = "invalidCharacters";
     }
   }
   return reqstIsNumbers;
 }
 
-function verPassLenVal(requestedPassword) {
+function verPassLenVal(passLength) {
   //Function to verify that requested password length is within accepted range (8<= x <= 128)
   //Input: User requested password length (string)
   //Output: ('string') 'valid' if password length only contains numbers, 'invalidSizeSmall' if password length too short, 'invalidSizeLarge' if password length too long
 
   var rqstIsInRange;
 
-  if (parseInt(requestedPassword) < 8) {
+  if (parseInt(passLength) < 8) {
     rqstIsInRange = "invalidSizeSmall";
-  } else if (parseInt(requestedPassword) > 128) {
+  } else if (parseInt(passLength) > 128) {
     rqstIsInRange = "invalidSizeLarge";
   } else {
     rqstIsInRange = "valid";
@@ -234,6 +234,8 @@ function characterMap(passwordLength, characterAmounts) {
   var remainingCharacters = passwordLength;
   var individualCharacters = characterAmounts;
   var characterMap = "";
+  
+  
   while (remainingCharacters > 0) {
     var randFour = Math.floor(Math.random() * 4);
     if (individualCharacters[randFour] > 0) {
@@ -249,6 +251,7 @@ function characterMap(passwordLength, characterAmounts) {
       remainingCharacters = remainingCharacters - 1;
       individualCharacters[randFour] = individualCharacters[randFour] - 1;
     }
+    
   }
 
   return characterMap;

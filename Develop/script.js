@@ -22,10 +22,12 @@ function generatePassword() {
   var userInputNumber = rqstChrType('numbers (0-9)');
   var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
   var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
-  var generatedPassword = characterMap(userInputLen, characterAmounts);
+  var generatedCharMap = characterMap(userInputLen, characterAmounts);
+  var generatedPassword = assignRandChar(generatedCharMap);
+    
   
-
   return generatedPassword;
+ 
 }
 
 function rqstPassLen() {
@@ -77,12 +79,11 @@ function verPassLen(passLength) {
 
 function verPassLenChar(requestedPassword) {
   var reqstIsNumbers = 'valid';
-  for (i = 0; i < requestedPassword.length; i++) {
-    if (intDict.indexOf(requestedPassword[i]) === -1) {
-      reqstIsNumbers = 'invalidCharacters';
+    for (i = 0; i < requestedPassword.length; i++) {
+      if (intDict.indexOf(requestedPassword[i]) === -1) {
+        reqstIsNumbers = 'invalidCharacters';
+      }
     }
-  }
-
   return reqstIsNumbers;
 }
 
@@ -151,20 +152,38 @@ function characterMap(passwordLength, characterAmounts) {
         characterMap = characterMap + 'U';
       } else if (randFour === 2) {
         characterMap = characterMap + 'N';
-      } else if (randFour === 3) {
-        characterMap = characterMap + 'S';
       } else {
-        console.log('YOU MESSED UP KYLE!');
-      }
+        characterMap = characterMap + 'S';
+      } 
       remainingCharacters = remainingCharacters - 1;
       individualCharacters[randFour] = individualCharacters[randFour] - 1;
-      console.log(remainingCharacters);
-      console.log(individualCharacters);
-      console.log(characterMap);
+
     }
   }
   return characterMap;
 }
+
+function assignRandChar(characterMap) {
+  var finalPassword = '';
+  for (var i = 0; i < characterMap.length; i++) {
+    var temp
+    if (characterMap[i] === 'L') {
+      temp = alphaDict[Math.floor(Math.random() * alphaDict.length)];
+    } else if (characterMap[i] === "U") {
+      temp = alphaDict[Math.floor(Math.random() * alphaDict.length)].toUpperCase();
+    } else if (characterMap[i] === "N") {
+      temp = alphaDict[Math.floor(Math.random() * intDict.length)];
+    } else {
+      temp = specialDict[Math.floor(Math.random() * specialDict.length)];
+    }
+
+    finalPassword = finalPassword + temp;
+  }
+
+  return finalPassword;  
+}
+
+
 
 
 // Click button to start

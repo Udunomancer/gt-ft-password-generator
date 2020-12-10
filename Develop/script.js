@@ -22,9 +22,10 @@ function generatePassword() {
   var userInputNumber = rqstChrType('numbers (0-9)');
   var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
   var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
+  var generatedPassword = characterMap(userInputLen, characterAmounts);
   
 
-  return characterAmounts;
+  return generatedPassword;
 }
 
 function rqstPassLen() {
@@ -51,7 +52,6 @@ function rqstNewPassLen(error) {
   return enteredValue;
 
 }
-
 
 function verPassLen(passLength) {
 
@@ -138,6 +138,33 @@ function randCharAmounts(passwordLength, usedTypesArray) {
   return numOfCharTypes;
 }
 
+function characterMap(passwordLength, characterAmounts) {
+  var remainingCharacters = passwordLength;
+  var individualCharacters = characterAmounts;
+  var characterMap = '';
+  while (remainingCharacters > 0) {
+    var randFour = Math.floor(Math.random()*4);
+    if (individualCharacters[randFour] > 0) {
+      if (randFour === 0) {
+        characterMap = characterMap + 'L';
+      } else if (randFour === 1) {
+        characterMap = characterMap + 'U';
+      } else if (randFour === 2) {
+        characterMap = characterMap + 'N';
+      } else if (randFour === 3) {
+        characterMap = characterMap + 'S';
+      } else {
+        console.log('YOU MESSED UP KYLE!');
+      }
+      remainingCharacters = remainingCharacters - 1;
+      individualCharacters[randFour] = individualCharacters[randFour] - 1;
+      console.log(remainingCharacters);
+      console.log(individualCharacters);
+      console.log(characterMap);
+    }
+  }
+  return characterMap;
+}
 
 
 // Click button to start

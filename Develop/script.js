@@ -17,22 +17,35 @@ var specialDict = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '
 function generatePassword() {
 
   var userInputLen = rqstPassLen();
-  var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
-  var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
-  var userInputNumber = rqstChrType('numbers (0-9)');
-  var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
-  var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
-  var generatedCharMap = characterMap(userInputLen, characterAmounts);
-  var generatedPassword = assignRandChar(generatedCharMap);
+  if (userInputLen === false) {
+    return 'Request Cancelled';
+  } else {
+    var userInputLwrCase = rqstChrType('lower-case characters (a-z)');
+    var userInputUprCase = rqstChrType('upper-case characters (A-Z)');
+    var userInputNumber = rqstChrType('numbers (0-9)');
+    var userInputSpclChar = rqstChrType('special characters (!, @, &, etc.)');
+    console.log(userInputLwrCase);
+    console.log(userInputUprCase);
+    console.log(userInputNumber);
+    console.log(userInputSpclChar);
+    var characterAmounts = randCharAmounts(userInputLen, [userInputLwrCase, userInputUprCase, userInputNumber, userInputSpclChar]);
+    console.log(characterAmounts);
+    var generatedCharMap = characterMap(userInputLen, characterAmounts);
+    console.log(generatedCharMap);
+    var generatedPassword = assignRandChar(generatedCharMap);
     
-  
-  return generatedPassword;
+    return generatedPassword;
+  }
  
 }
 
 function rqstPassLen() {
   
   var enteredValue = prompt('How long would you like your password to be?\n(Response must be in numeric characters and passowrd length must be between 8 and 128 characters long)')
+
+  if (enteredValue === null) {
+    return false;
+  }
 
   enteredValue = verPassLen(enteredValue);
 
@@ -48,6 +61,10 @@ function rqstNewPassLen(error) {
   };
 
   var enteredValue = prompt('Sorry!  Looks like your requested length ' + errorMsg[error]);
+
+  if (enteredValue === null) {
+    return false;
+  }
 
   enteredValue = verPassLen(enteredValue);
 
@@ -164,6 +181,7 @@ function characterMap(passwordLength, characterAmounts) {
 }
 
 function assignRandChar(characterMap) {
+  
   var finalPassword = '';
   for (var i = 0; i < characterMap.length; i++) {
     var temp
@@ -172,7 +190,7 @@ function assignRandChar(characterMap) {
     } else if (characterMap[i] === "U") {
       temp = alphaDict[Math.floor(Math.random() * alphaDict.length)].toUpperCase();
     } else if (characterMap[i] === "N") {
-      temp = alphaDict[Math.floor(Math.random() * intDict.length)];
+      temp = intDict[Math.floor(Math.random() * intDict.length)];
     } else {
       temp = specialDict[Math.floor(Math.random() * specialDict.length)];
     }
@@ -183,25 +201,4 @@ function assignRandChar(characterMap) {
   return finalPassword;  
 }
 
-
-
-
-// Click button to start
-
-// Prompted for password criteria
-  // 1. Prompt for password length
-    // Verify that value entered is a numeric value
-    // Verify that numberic value entered is between 8 and 128
-  // 2. Prompt for lowercase characters
-  // 3. Prompt to include uppercase characters
-  // 4. Prompt to include numerals
-  // 5. Prompt to include special characters
-    // Verify that at least one character type was selected
-
-// Function to return a randomly generated password bassed on user prompts
-  // Function to determine ratio of selected character types
-
-
-
-// Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);

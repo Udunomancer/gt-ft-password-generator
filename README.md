@@ -14,8 +14,9 @@ This repository hosts all files to run a random password generator page.  It inc
 
 ## <a name="password_generator"></a>Password Generator
 
-Site link: 
+Site link: [https://udunomancer.github.io/gt-ft-password-generator/](https://udunomancer.github.io/gt-ft-password-generator/)
 
+![Image](assets/images/password-generator-screenshot.png)
 
 This Password Generator contains one page, where a user can generate a random password by clicking a button and responding to prompts.
 

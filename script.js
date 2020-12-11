@@ -159,7 +159,7 @@ function verPassLenChar(passLength) {
   //Function to verify that all characters in the requested password length are numbers
   //DID NOT USE ParseInt because ParseInt will return an int in situations where numbers AND letters are entered (ex: parseInt(123abc would return 123))
   //Input: User requested password length (string)
-  //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers, 'invalidNoCharacters' if password length contains no charaters
+  //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers, 'invalidNoValue' if password length contains no charaters
 
   var reqstIsNumbers = "valid";
 

@@ -114,10 +114,12 @@ function rqstNewPassLen(error) {
   //Output: A password length ('string') OR false (boolean) if user cancels on prompt
 
   var errorMsg = {
-    invalidCharacters: "contains non-numeric characters.  Please enter a number using only use 0-9.",
+    invalidCharacters:
+      "contains non-numeric characters.  Please enter a number using only use 0-9.",
     invalidSizeSmall: "is too small.  Please enter a number between 8 and 128.",
     invalidSizeLarge: "is too large.  Please enter a number between 8 and 128.",
-    invalidNoValue: "contains no characters.  Please enter a number between 8 and 128"
+    invalidNoValue:
+      "contains no characters.  Please enter a number between 8 and 128",
   };
 
   var enteredValue = prompt(
@@ -157,12 +159,12 @@ function verPassLenChar(passLength) {
   //Function to verify that all characters in the requested password length are numbers
   //DID NOT USE ParseInt because ParseInt will return an int in situations where numbers AND letters are entered (ex: parseInt(123abc would return 123))
   //Input: User requested password length (string)
-  //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers
+  //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers, 'invalidNoCharacters' if password length contains no charaters
 
   var reqstIsNumbers = "valid";
-  
+
   if (passLength.length === 0) {
-    reqstIsNumbers = 'invalidNoValue';
+    reqstIsNumbers = "invalidNoValue";
     return reqstIsNumbers;
   }
 

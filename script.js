@@ -78,7 +78,10 @@ function generatePassword() {
     ) {
       return "Request Cancelled - No Character Types Selected";
     } else {
-      var generatedCharAmounts = randCharAmounts(userInputLen, userInputCharTypes);
+      var generatedCharAmounts = randCharAmounts(
+        userInputLen,
+        userInputCharTypes
+      );
       var generatedCharMap = characterMap(userInputLen, generatedCharAmounts);
       var generatedPassword = assignRandChar(generatedCharMap);
 
@@ -111,9 +114,10 @@ function rqstNewPassLen(error) {
   //Output: A password length ('string') OR false (boolean) if user cancels on prompt
 
   var errorMsg = {
-    invalidCharacters: "contains non-numeric characters.  Please only use 0-9.",
+    invalidCharacters: "contains non-numeric characters.  Please enter a number using only use 0-9.",
     invalidSizeSmall: "is too small.  Please enter a number between 8 and 128.",
     invalidSizeLarge: "is too large.  Please enter a number between 8 and 128.",
+    invalidNoValue: "contains no characters.  Please enter a number between 8 and 128"
   };
 
   var enteredValue = prompt(
@@ -156,9 +160,16 @@ function verPassLenChar(passLength) {
   //Output: ('string') 'valid' if password only contains numbers, 'invalidCharacters' if password length contains characters other than numbers
 
   var reqstIsNumbers = "valid";
+  
+  if (passLength.length === 0) {
+    reqstIsNumbers = 'invalidNoValue';
+    return reqstIsNumbers;
+  }
+
   for (i = 0; i < passLength.length; i++) {
     if (intDict.indexOf(passLength[i]) === -1) {
       reqstIsNumbers = "invalidCharacters";
+      return reqstIsNumbers;
     }
   }
   return reqstIsNumbers;
@@ -224,7 +235,7 @@ function randCharAmounts(passwordLength, usedTypesArray) {
     }
     totalCharOccurence = totalCharOccurence + numOfCharTypes[j];
   }
-  
+
   //Checks to correct any rounding error in the random allocation
   //Check for rounding error UP
   while (totalCharOccurence > passwordLength) {
@@ -237,8 +248,12 @@ function randCharAmounts(passwordLength, usedTypesArray) {
     } else {
       numOfCharTypes[3] = numOfCharTypes[3] - 1;
     }
-    
-    totalCharOccurence = numOfCharTypes[0] + numOfCharTypes[1] + numOfCharTypes[2] + numOfCharTypes[3];
+
+    totalCharOccurence =
+      numOfCharTypes[0] +
+      numOfCharTypes[1] +
+      numOfCharTypes[2] +
+      numOfCharTypes[3];
   }
 
   //Check for rounding error DOWN
@@ -252,10 +267,13 @@ function randCharAmounts(passwordLength, usedTypesArray) {
     } else {
       numOfCharTypes[3] = numOfCharTypes[3] + 1;
     }
-    
-    totalCharOccurence = numOfCharTypes[0] + numOfCharTypes[1] + numOfCharTypes[2] + numOfCharTypes[3];
+
+    totalCharOccurence =
+      numOfCharTypes[0] +
+      numOfCharTypes[1] +
+      numOfCharTypes[2] +
+      numOfCharTypes[3];
   }
-  
 
   return numOfCharTypes;
 }
@@ -268,8 +286,7 @@ function characterMap(passwordLength, characterAmounts) {
   var remainingCharacters = passwordLength;
   var individualCharacters = characterAmounts;
   var characterMap = "";
-  
-  
+
   while (remainingCharacters > 0) {
     var randFour = Math.floor(Math.random() * 4);
     if (individualCharacters[randFour] > 0) {
@@ -285,7 +302,6 @@ function characterMap(passwordLength, characterAmounts) {
       remainingCharacters = remainingCharacters - 1;
       individualCharacters[randFour] = individualCharacters[randFour] - 1;
     }
-    
   }
 
   return characterMap;

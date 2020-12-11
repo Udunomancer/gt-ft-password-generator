@@ -204,6 +204,7 @@ function randCharAmounts(passwordLength, usedTypesArray) {
   var numOfCharTypes = [];
   var denominator = 0;
   var totalReserved = 0;
+  var totalCharOccurence = 0;
   for (var i = 0; i < usedTypesArray.length; i++) {
     if (usedTypesArray[i]) {
       numOfCharTypes[i] = Math.random();
@@ -221,7 +222,40 @@ function randCharAmounts(passwordLength, usedTypesArray) {
           (numOfCharTypes[j] / denominator) * (passwordLength - totalReserved)
         ) + 1;
     }
+    totalCharOccurence = totalCharOccurence + numOfCharTypes[j];
   }
+  
+  //Checks to correct any rounding error in the random allocation
+  //Check for rounding error UP
+  while (totalCharOccurence > passwordLength) {
+    if (numOfCharTypes[0] > 1) {
+      numOfCharTypes[0] = numOfCharTypes[0] - 1;
+    } else if (numOfCharTypes[1] > 1) {
+      numOfCharTypes[1] = numOfCharTypes[1] - 1;
+    } else if (numOfCharTypes[2] > 1) {
+      numOfCharTypes[2] = numOfCharTypes[2] - 1;
+    } else {
+      numOfCharTypes[3] = numOfCharTypes[3] - 1;
+    }
+    
+    totalCharOccurence = numOfCharTypes[0] + numOfCharTypes[1] + numOfCharTypes[2] + numOfCharTypes[3];
+  }
+
+  //Check for rounding error DOWN
+  while (totalCharOccurence < passwordLength) {
+    if (numOfCharTypes[0] > 0) {
+      numOfCharTypes[0] = numOfCharTypes[0] + 1;
+    } else if (numOfCharTypes[1] > 0) {
+      numOfCharTypes[1] = numOfCharTypes[1] + 1;
+    } else if (numOfCharTypes[2] > 0) {
+      numOfCharTypes[2] = numOfCharTypes[2] + 1;
+    } else {
+      numOfCharTypes[3] = numOfCharTypes[3] + 1;
+    }
+    
+    totalCharOccurence = numOfCharTypes[0] + numOfCharTypes[1] + numOfCharTypes[2] + numOfCharTypes[3];
+  }
+  
 
   return numOfCharTypes;
 }
